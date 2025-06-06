@@ -1,7 +1,10 @@
 import 'package:extended_image/extended_image.dart' show ExtendedImage;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:incident_tracker_app/ita_providers/common_providers.dart';
 import 'package:incident_tracker_app/theme/theme.dart';
+import 'package:incident_tracker_app/utils/ita_api_utils.dart';
+import 'package:incident_tracker_app/views/models/core_res.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
@@ -18,21 +21,18 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
         throw 'Could not launch';
       }
     } catch (e) {
-      // showSnackBar(context, "Can not perform this action",
-      //     status: ResponseStatus.completed);
+      showSnackBar(
+        context,
+        "Can not perform this action",
+        status: ResponseStatus.completed,
+      );
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    var userState = ref.watch(authTokenProvider);
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          "Profile",
-          style: TextStyle(fontSize: 20, color: Colors.white),
-        ),
-        centerTitle: true,
-      ),
       body: SafeArea(
         child: NestedScrollView(
           headerSliverBuilder: (context, isScrolled) {
@@ -66,7 +66,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     ),
                   ),
                   Text(
-                    "Rene MUCYO TUYISENGE",
+                    "${userState.data?.user?.firstName ?? "-"} ${userState.data?.user?.lastName ?? "-"}",
                     style: const TextStyle(fontSize: 22),
                   ),
                   SizedBox(height: 15),
@@ -74,40 +74,29 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       InkWell(
-                        onTap: () {
-                          final Uri emailLaunchUri = Uri(
-                            scheme: 'mailto',
-                            path: 'renemucyo1@gmail.com',
-                          );
-                          _launch(emailLaunchUri);
-                        },
-                        // detailsState.data?.email == null
-                        //         ? null
-                        //         : () {
-                        //           final Uri emailLaunchUri = Uri(
-                        //             scheme: 'mailto',
-                        //             path: 'renemucyo1@gmail.com',
-                        //           );
-                        //           _launch(emailLaunchUri);
-                        //         },
+                        onTap:
+                            userState.data?.user?.email == null
+                                ? null
+                                : () {
+                                  final Uri emailLaunchUri = Uri(
+                                    scheme: 'mailto',
+                                    path: userState.data?.user?.email ?? "-",
+                                  );
+                                  _launch(emailLaunchUri);
+                                },
                         borderRadius: BorderRadius.circular(25),
                         child: Padding(
                           padding: const EdgeInsets.all(3.0),
                           child: CircleAvatar(
                             radius: 23,
-                            backgroundColor: errorInfoColor,
-                            // backgroundColor:
-                            //     detailsState.data?.email == null
-                            //         ? Colors.grey.shade300
-                            //         : null,
+                            backgroundColor:
+                                userState.data?.user?.email == null
+                                    ? Colors.grey.shade300
+                                    : errorInfoColor,
                             child: Icon(
                               Icons.alternate_email_rounded,
                               size: 18,
                               color: Colors.white,
-                              // color:
-                              //     detailsState.data?.email == null
-                              //         ? Colors.grey
-                              //         : null,
                             ),
                           ),
                         ),
@@ -117,7 +106,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         onTap: () {
                           final Uri smsLaunchUri = Uri(
                             scheme: 'sms',
-                            path: '+250784494820',
+                            path: '${userState.data?.user?.phone}',
                           );
                           _launch(smsLaunchUri);
                         },
@@ -126,55 +115,43 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           padding: const EdgeInsets.all(3.0),
                           child: CircleAvatar(
                             backgroundColor: thirdColor,
-                            // backgroundColor:
-                            // detailsState.data?.phoneNumber == null
-                            //     ? Colors.grey.shade300
-                            //     : thirdColor,
                             radius: 23,
                             child: Icon(
                               Icons.comment_rounded,
                               size: 18,
                               color: Colors.white,
-                              // color:
-                              //     detailsState.data?.phoneNumber == null
-                              //         ? Colors.grey
-                              //         : Colors.white,
                             ),
                           ),
                         ),
                       ),
                       const SizedBox(width: 15),
                       InkWell(
-                        onTap: () {
-                          final Uri smsLaunchUri = Uri(scheme: 'tel', path: '');
-                          _launch(smsLaunchUri);
-                        },
-                        // detailsState.data?.phoneNumber == null
-                        //         ? null
-                        //         : () {
-                        //           final Uri smsLaunchUri = Uri(
-                        //             scheme: 'tel',
-                        //             path: '${detailsState.data?.phoneNumber}',
-                        //           );
-                        //           _launch(smsLaunchUri);
-                        //         },
+                        onTap:
+                            userState.data?.user?.phone == null
+                                ? null
+                                : () {
+                                  final Uri smsLaunchUri = Uri(
+                                    scheme: 'tel',
+                                    path: '${userState.data?.user?.phone}',
+                                  );
+                                  _launch(smsLaunchUri);
+                                },
                         borderRadius: BorderRadius.circular(25),
                         child: Padding(
                           padding: const EdgeInsets.all(3.0),
                           child: CircleAvatar(
-                            backgroundColor: greenColor,
-                            // detailsState.data?.phoneNumber == null
-                            //     ? Colors.grey.shade300
-                            //     : greenColor,
+                            backgroundColor:
+                                userState.data?.user?.phone == null
+                                    ? Colors.grey.shade300
+                                    : greenColor,
                             radius: 23,
                             child: Icon(
                               Icons.phone,
                               size: 18,
-                              color: Colors.white,
-                              // color:
-                              //     detailsState.data?.phoneNumber == null
-                              //         ? Colors.grey
-                              //         : Colors.white,
+                              color:
+                                  userState.data?.user?.phone == null
+                                      ? Colors.grey
+                                      : Colors.white,
                             ),
                           ),
                         ),
@@ -195,24 +172,30 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             color: Colors.grey,
                           ),
                         ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Icon(Icons.edit, size: 20, color: Colors.grey),
+                        ),
                       ],
                     ),
                   ),
                   ListTile(
                     title: Text("Full names"),
-                    subtitle: Text("Rene MUCYO TUYISENGE"),
+                    subtitle: Text(
+                      "${userState.data?.user?.firstName} ${userState.data?.user?.lastName}",
+                    ),
                     leading: Icon(Icons.ac_unit),
                   ),
                   const Divider(height: 5),
                   ListTile(
                     title: Text("Account type"),
-                    subtitle: Text("Super"),
+                    subtitle: Text(userState.data?.user?.accountType ?? "-"),
                     leading: Icon(Icons.account_balance_wallet),
                   ),
                   const Divider(height: 5),
                   ListTile(
                     title: Text("Gender"),
-                    subtitle: Text("Male"),
+                    subtitle: Text(userState.data?.user?.gender ?? "-"),
                     leading: Icon(Icons.generating_tokens_outlined),
                   ),
                   Padding(
@@ -228,18 +211,22 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             color: Colors.grey,
                           ),
                         ),
+                        GestureDetector(
+                          onTap: () {},
+                          child: Icon(Icons.edit, size: 20, color: Colors.grey),
+                        ),
                       ],
                     ),
                   ),
                   ListTile(
                     title: Text("Phone"),
-                    subtitle: Text("+250784494820"),
+                    subtitle: Text(userState.data?.user?.phone ?? "-"),
                     leading: Icon(Icons.phone_in_talk_rounded),
                   ),
                   const Divider(height: 5),
                   ListTile(
                     title: Text("Email"),
-                    subtitle: Text("renemucyo1@gmail.com"),
+                    subtitle: Text(userState.data?.user?.email ?? "-"),
                     leading: Icon(Icons.email_outlined),
                   ),
                   ListTile(
