@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:incident_tracker_app/ita_providers/common_providers.dart';
+import 'package:incident_tracker_app/ita_providers/profile/providers.dart';
 import 'package:incident_tracker_app/models/core_res.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {

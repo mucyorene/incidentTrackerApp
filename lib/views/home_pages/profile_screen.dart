@@ -2,7 +2,7 @@ import 'package:extended_image/extended_image.dart'
     show ExtendedImage, LoadState;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:incident_tracker_app/ita_providers/common_providers.dart';
+import 'package:incident_tracker_app/ita_providers/profile/providers.dart';
 import 'package:incident_tracker_app/theme/theme.dart';
 import 'package:incident_tracker_app/utils/ita_api_utils.dart';
 import 'package:incident_tracker_app/models/core_res.dart';
