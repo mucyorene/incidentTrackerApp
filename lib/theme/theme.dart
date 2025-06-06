@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart' show GoogleFonts;
 
 const primaryColor = Color(0xFFFE8C00); //main
@@ -49,8 +50,11 @@ var lightTheme = ThemeData(
   useMaterial3: false,
   brightness: Brightness.light,
   primaryColor: secondaryColor,
-  appBarTheme: const AppBarTheme(
+  appBarTheme: AppBarTheme(
     elevation: 0,
+    systemOverlayStyle: SystemUiOverlayStyle.light.copyWith(
+      systemNavigationBarColor: Colors.transparent,
+    ),
     centerTitle: true,
     titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
     iconTheme: IconThemeData(color: Colors.white),

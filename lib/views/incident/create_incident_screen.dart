@@ -1,7 +1,12 @@
+import 'dart:io';
+
 import 'package:dotted_border/dotted_border.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:incident_tracker_app/ita_providers/create_incident/providers.dart';
 import 'package:incident_tracker_app/theme/styles.dart';
+import 'package:incident_tracker_app/theme/theme.dart';
 import 'package:incident_tracker_app/utils/ita_api_utils.dart';
 import 'package:incident_tracker_app/views/incident/upload_image_options_widget.dart';
 
@@ -28,7 +33,26 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
   }
 
   @override
+  void initState() {
+    ref.read(selectedFileProvider);
+    super.initState();
+  }
+
+  //File picker
+  var selectedFilesProvider = StateProvider<List<PlatformFile>>((ref) => []);
+
+  pickMainImage(bool fromGallery) async {
+    var result = await ref
+        .read(uploadProfileProvider.notifier)
+        .pickProfilePicture(source: fromGallery ? "gallery" : "camera");
+    if (result != null) {
+      ref.read(selectedFileProvider.notifier).state = result;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
+    var createProfileDetails = ref.watch(selectedFileProvider);
     return Scaffold(
       appBar: AppBar(
         title: Text("Create Incident", style: TextStyle(color: Colors.white)),
@@ -262,7 +286,9 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
                                 padding: const EdgeInsets.only(top: 30),
                                 child: GestureDetector(
                                   onTap: () {
-                                    var w = UploadImageOptionsWidget();
+                                    var w = UploadImageOptionsWidget(
+                                      selectSource: pickMainImage,
+                                    );
                                     showWidgetDialog(
                                       MediaQuery.of(context).size.width,
                                       context,
@@ -309,6 +335,32 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
                                   ),
                                 ),
                               ),
+                              if (createProfileDetails != null)
+                                Padding(
+                                  padding: const EdgeInsets.only(top: 15),
+                                  child: Stack(
+                                    children: [
+                                      Image.file(
+                                        File("${createProfileDetails.path}"),
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                        height: 150,
+                                      ),
+                                      Positioned(
+                                        right: 0,
+                                        child: GestureDetector(
+                                          onTap: () {
+                                            ref.refresh(selectedFileProvider);
+                                          },
+                                          child: Icon(
+                                            Icons.close_rounded,
+                                            color: errorRedColor,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
                               Padding(
                                 padding: EdgeInsets.only(top: 30),
                                 child: SizedBox(
@@ -329,7 +381,7 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
                                     //     )
                                     //     :
                                     const Text(
-                                      "Login",
+                                      "Save",
                                       style: TextStyle(
                                         fontWeight: FontWeight.bold,
                                         color: Color(0xFFFFFFFF),

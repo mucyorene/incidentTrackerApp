@@ -4,7 +4,9 @@ import 'package:go_router/go_router.dart';
 import 'package:incident_tracker_app/utils/custom_model_app_bar.dart';
 
 class UploadImageOptionsWidget extends ConsumerStatefulWidget {
-  const UploadImageOptionsWidget({super.key});
+  final Function selectSource;
+
+  const UploadImageOptionsWidget({super.key, required this.selectSource});
 
   @override
   ConsumerState<UploadImageOptionsWidget> createState() =>
@@ -13,16 +15,6 @@ class UploadImageOptionsWidget extends ConsumerStatefulWidget {
 
 class _UploadImageOptionsWidgetState
     extends ConsumerState<UploadImageOptionsWidget> {
-  pickMainImage(bool fromGallery) async {
-    // ref.read(imageProvider.notifier).state = null;
-    // var result = await ref
-    //     .read(uploadMainImageProvider.notifier)
-    //     .pickMainImage(source: fromGallery ? "gallery" : "camera");
-    // if (result != null) {
-    //   ref.read(selectedFileProvider.notifier).state = result;
-    // }
-  }
-
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -44,18 +36,21 @@ class _UploadImageOptionsWidgetState
               children: [
                 ListTile(
                   title: const Text("Upload from your device"),
+                  leading: Icon(Icons.image_sharp),
                   onTap: () {
-                    pickMainImage(true);
+                    widget.selectSource(true);
                     context.pop();
                   },
+                  trailing: Icon(Icons.arrow_forward),
                 ),
                 ListTile(
                   title: const Text("Take a photo"),
+                  leading: Icon(Icons.camera_alt_outlined),
                   onTap: () {
                     context.pop();
-                    pickMainImage(false);
+                    widget.selectSource(false);
                   },
-                  // onTap: () => selectImage(imageSource: ImageSource.camera),
+                  trailing: Icon(Icons.arrow_forward),
                 ),
               ],
             ),

@@ -56,7 +56,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                   barrierDismissible: false,
                   builder: (context) {
                     return AlertDialog(
-                      title: const Text("Sign in again"),
+                      title: const Text("Confirm to logout"),
                       content: const Text("Are you sure you want to logout?"),
                       actions: [
                         TextButton(
