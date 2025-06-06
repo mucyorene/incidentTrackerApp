@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:incident_tracker_app/ita_providers/common_providers.dart';
-import 'package:incident_tracker_app/views/models/core_res.dart';
+import 'package:incident_tracker_app/models/core_res.dart';
 
 class SplashScreen extends ConsumerStatefulWidget {
   const SplashScreen({super.key});
@@ -24,9 +24,12 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   init() async {
     Future.delayed(const Duration(seconds: 3)).then((value) async {
       var info = ref.read(authTokenProvider);
-
+      print("HERE IS INFO: ${info.status}");
       if (info.status == ResponseStatus.success) {
-        context.go("/homepage");
+        var userState = info.data;
+        if (userState?.token != null) {
+          context.go("/homepage");
+        }
       } else {
         context.go("/login");
       }

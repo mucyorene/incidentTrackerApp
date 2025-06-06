@@ -4,7 +4,7 @@ import 'package:go_router/go_router.dart';
 import 'package:incident_tracker_app/ita_providers/authentication/providers.dart';
 import 'package:incident_tracker_app/theme/styles.dart';
 import 'package:incident_tracker_app/utils/form_validations.dart';
-import 'package:incident_tracker_app/views/models/core_res.dart';
+import 'package:incident_tracker_app/models/core_res.dart';
 import 'package:incident_tracker_app/utils/ita_api_utils.dart';
 
 class SignInScreen extends ConsumerStatefulWidget {
@@ -28,7 +28,7 @@ class _SignInScreenState extends ConsumerState<SignInScreen> {
           .read(signInProvider.notifier)
           .signIn(email: email, password: password);
       if (signInInfo.status == ResponseStatus.success) {
-        context.push("/homepage");
+        context.go("/homepage");
       } else {
         showSnackBar(
           context,

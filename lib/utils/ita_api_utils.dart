@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:incident_tracker_app/ita_providers/common_providers.dart';
-import 'package:incident_tracker_app/views/models/core_res.dart';
+import 'package:incident_tracker_app/models/core_res.dart';
 import 'dart:developer';
 
 class ItaApiUtils {
@@ -222,7 +222,7 @@ void showSnackBar(
               ? SnackBarAction(
                 label: "Report",
                 onPressed: () {
-                  GoRouter.of(context).push("/reportIssue");
+                  // GoRouter.of(context).push("/reportIssue");
                 },
               )
               : statusCode == 401
@@ -265,3 +265,4 @@ void showSnackBar(
     ),
   );
 }
+

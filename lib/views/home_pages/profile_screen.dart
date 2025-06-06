@@ -5,7 +5,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:incident_tracker_app/ita_providers/common_providers.dart';
 import 'package:incident_tracker_app/theme/theme.dart';
 import 'package:incident_tracker_app/utils/ita_api_utils.dart';
-import 'package:incident_tracker_app/views/models/core_res.dart';
+import 'package:incident_tracker_app/models/core_res.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ProfileScreen extends ConsumerStatefulWidget {
