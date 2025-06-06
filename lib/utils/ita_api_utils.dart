@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:incident_tracker_app/views/ita_providers/common_providers.dart';
 import 'package:incident_tracker_app/views/models/core_res.dart';
 import 'dart:developer';
@@ -182,4 +183,84 @@ class ItaApiUtils {
       statusCode: 500,
     );
   }
+}
+
+Color getSnackBarColor(ResponseStatus status) {
+  switch (status) {
+    case ResponseStatus.completed:
+      return Colors.blueAccent;
+    case ResponseStatus.success:
+      return Colors.green;
+    default:
+      return Colors.redAccent;
+  }
+}
+
+void showSnackBar(
+  BuildContext context,
+  String text, {
+  ResponseStatus status = ResponseStatus.failed,
+  int duration = 5,
+  int statusCode = 0,
+}) {
+  ScaffoldMessenger.of(context).removeCurrentSnackBar();
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      behavior: SnackBarBehavior.fixed,
+      elevation: 1,
+      clipBehavior: Clip.hardEdge,
+      content: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: const TextStyle(color: Colors.white, fontSize: 14.0),
+      ),
+      backgroundColor: getSnackBarColor(status),
+      duration: Duration(seconds: duration),
+      action:
+          statusCode == 500
+              ? SnackBarAction(
+                label: "Report",
+                onPressed: () {
+                  GoRouter.of(context).push("/reportIssue");
+                },
+              )
+              : statusCode == 401
+              ? SnackBarAction(
+                label: "Sign in",
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (context) {
+                      return AlertDialog(
+                        title: const Text("Sign in again"),
+                        // title: const Text("Session expired"),
+                        content: const Text(
+                          "You need to sign in, after session expiration",
+                        ),
+                        // content: const Text("You are required to sign in again into your account"),
+                        actions: [
+                          Consumer(
+                            builder: (context, ref, w) {
+                              return TextButton(
+                                onPressed: () {
+                                  // ref
+                                  //     .read(profileProvider.notifier)
+                                  //     .clear();
+                                  context.go("/login");
+                                },
+                                child: const Text("Sign in"),
+                                // child: const Text("Sign in")
+                              );
+                            },
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+              )
+              : null,
+    ),
+  );
 }

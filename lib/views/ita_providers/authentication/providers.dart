@@ -4,6 +4,6 @@ import 'package:incident_tracker_app/views/ita_providers/authentication/sign_in_
 import 'package:incident_tracker_app/views/models/core_res.dart';
 
 var signInProvider =
-    StateNotifierProvider<SignInNotifier, GenericResponseModel<UserProfile>>(
+    StateNotifierProvider<SignInNotifier, GenericResponseModel<LoginResponse>>(
       (ref) => SignInNotifier(ref),
     );

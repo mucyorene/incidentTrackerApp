@@ -17,6 +17,7 @@ dependencies:
   easy_localization: ^3.0.7
   url_launcher: ^6.3.0
   dio: ^5.5.0+1
+  flutter_secure_storage: ^9.2.2
 
   #UI Packages
   google_fonts: ^5.1.0
