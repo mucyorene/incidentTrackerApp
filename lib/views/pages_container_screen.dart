@@ -24,13 +24,8 @@ class _PagesContainerScreenState extends ConsumerState<PagesContainerScreen> {
     var currentPage = ref.watch(activePageProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          pages[currentPage],
-          style: TextStyle(
-            color: Colors.white,
-          ),
-        ),
-        centerTitle: true,
+        title: Text(pages[currentPage], style: TextStyle(color: Colors.black)),
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
       body: PageView(
         onPageChanged: (i) {

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import 'package:incident_tracker_app/theme/theme.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
@@ -13,17 +14,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.white,
-      body: NestedScrollView(
-        headerSliverBuilder: (context, isScrolled) {
-          return [];
-        },
-        body: SingleChildScrollView(child: Column(children: [])),
+      body: SingleChildScrollView(
+        child: Column(
+          children: [TextButton(onPressed: () {}, child: Text("Hi"))],
+        ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         elevation: 0,
-        onPressed: () {},
+        onPressed: () {
+          context.push("/createIncident");
+        },
         backgroundColor: primaryColor,
         highlightElevation: 0.0,
         splashColor: primarySurfaceColor,

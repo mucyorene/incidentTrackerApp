@@ -49,7 +49,12 @@ var lightTheme = ThemeData(
   useMaterial3: false,
   brightness: Brightness.light,
   primaryColor: secondaryColor,
-  appBarTheme: const AppBarTheme(elevation: 0),
+  appBarTheme: const AppBarTheme(
+    elevation: 0,
+    centerTitle: true,
+    titleTextStyle: TextStyle(color: Colors.white, fontSize: 20),
+    iconTheme: IconThemeData(color: Colors.white),
+  ),
   navigationBarTheme: NavigationBarThemeData(
     labelTextStyle: WidgetStateProperty.all(const TextStyle(fontSize: 13)),
   ),

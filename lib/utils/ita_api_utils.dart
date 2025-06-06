@@ -213,3 +213,110 @@ void showSnackBar(
     ),
   );
 }
+
+showWidgetDialog(
+  double width,
+  context,
+  Widget widget, {
+  bool overlay = true,
+  bool overlayDismiss = true,
+  bool canPop = true,
+}) async {
+  showGeneralDialog(
+    context: context,
+    barrierDismissible: overlayDismiss,
+    barrierLabel: "widget",
+    barrierColor:
+        overlay ? Colors.black.withOpacity(.5) : Colors.black.withOpacity(.1),
+    pageBuilder: (BuildContext context, anim1, anim2) {
+      return PopScope(
+        canPop: canPop,
+        child: Align(
+          alignment:
+              MediaQuery.of(context).size.width > 600
+                  ? Alignment.center
+                  : Alignment.bottomCenter,
+          child: Padding(
+            padding: const EdgeInsets.only(top: 50),
+            child: Dismissible(
+              key: const Key("dismiss2"),
+              direction: DismissDirection.down,
+              confirmDismiss: (direction) => Future.value(canPop),
+              onDismissed: (d) {
+                Navigator.pop(context);
+              },
+              child: Dismissible(
+                key: const Key("dismiss"),
+                direction: DismissDirection.horizontal,
+                confirmDismiss: (direction) => Future.value(canPop),
+                onDismissed: (d) {
+                  Navigator.pop(context);
+                },
+                child: SafeArea(
+                  bottom: MediaQuery.of(context).size.width > 600,
+                  child: Flex(
+                    mainAxisSize: MainAxisSize.min,
+                    direction: Axis.vertical,
+                    children: [
+                      Container(
+                        height: 4,
+                        width: 70,
+                        margin: const EdgeInsets.only(bottom: 5, top: 15),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(.8),
+                          borderRadius: BorderRadius.circular(60),
+                        ),
+                      ),
+                      Flexible(
+                        child: Padding(
+                          padding:
+                              MediaQuery.of(context).size.width > 600
+                                  ? const EdgeInsets.only(bottom: 20)
+                                  : EdgeInsets.zero,
+                          child: Material(
+                            clipBehavior: Clip.antiAlias,
+                            shape: RoundedRectangleBorder(
+                              borderRadius:
+                                  width < 660
+                                      ? const BorderRadius.only(
+                                        topLeft: Radius.circular(16),
+                                        topRight: Radius.circular(16),
+                                      )
+                                      : const BorderRadius.all(
+                                        Radius.circular(16),
+                                      ),
+                            ),
+                            child: SizedBox(
+                              width:
+                                  width >= 1050
+                                      ? width / 1.9
+                                      : width >= 900
+                                      ? width / 1.7
+                                      : width >= 660
+                                      ? width / 1.5
+                                      : width,
+                              child: widget,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ),
+      );
+    },
+    transitionBuilder: (context, anim1, anim2, child) {
+      return SlideTransition(
+        position: Tween(
+          begin: const Offset(0, 1),
+          end: const Offset(0, 0),
+        ).animate(anim1),
+        child: child,
+      );
+    },
+  );
+}

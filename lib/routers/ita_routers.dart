@@ -1,8 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:go_router/go_router.dart';
 import 'package:incident_tracker_app/views/authentication/sign_in_screen.dart';
-import 'package:incident_tracker_app/views/pages_container_screen.dart'
-    show PagesContainerScreen;
+import 'package:incident_tracker_app/views/incident/create_incident_screen.dart';
+import 'package:incident_tracker_app/views/pages_container_screen.dart';
 import 'package:incident_tracker_app/views/splash/splash_screen.dart';
 
 final itaRouters = GoRouter(
@@ -24,6 +23,13 @@ final itaRouters = GoRouter(
       name: 'Homepage',
       builder: (context, state) {
         return PagesContainerScreen();
+      },
+    ),
+    GoRoute(
+      path: '/createIncident',
+      name: 'CreateIncident',
+      builder: (context, state) {
+        return CreateIncidentScreen();
       },
     ),
   ],

@@ -19,11 +19,12 @@ dependencies:
   dio: ^5.5.0+1
   flutter_secure_storage: ^9.2.2
 
+
   #UI Packages
   google_fonts: ^5.1.0
   extended_image: ^8.1.1
   package_info_plus: ^8.0.2
-
+  dotted_border: ^2.1.0
 
 dev_dependencies:
   flutter_test:
