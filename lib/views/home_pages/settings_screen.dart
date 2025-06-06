@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
+import 'package:incident_tracker_app/ita_providers/authentication/providers.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
@@ -48,7 +50,35 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ),
             ListTile(
               title: Text("Logout"),
-              onTap: () {},
+              onTap: () {
+                showDialog(
+                  context: context,
+                  barrierDismissible: false,
+                  builder: (context) {
+                    return AlertDialog(
+                      title: const Text("Sign in again"),
+                      // title: const Text("Session expired"),
+                      content: const Text(
+                        "You need to sign in, after session expiration",
+                      ),
+                      // content: const Text("You are required to sign in again into your account"),
+                      actions: [
+                        Consumer(
+                          builder: (context, ref, w) {
+                            return TextButton(
+                              onPressed: () {
+                                ref.read(signInProvider.notifier).logout();
+                                context.go("/login");
+                              },
+                              child: const Text("Logout"),
+                            );
+                          },
+                        ),
+                      ],
+                    );
+                  },
+                );
+              },
               leading: Icon(Icons.logout_outlined),
             ),
             Divider(height: 5),

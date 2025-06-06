@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart'
     show FlutterSecureStorage;
+import 'package:incident_tracker_app/ita_providers/common_providers.dart';
 import 'package:incident_tracker_app/models/user_profile.dart';
 import 'package:incident_tracker_app/utils/ita_api_utils.dart';
 import 'package:incident_tracker_app/models/core_res.dart';
@@ -26,11 +27,13 @@ class SignInNotifier extends StateNotifier<GenericResponseModel<UserProfile>> {
       );
       var loginResponse = UserProfile.fromJson(responses.data);
       print("HERE IS TOKEN: ${loginResponse.token}");
+      print("HERE IS USER: ${loginResponse.user}");
       await storage.write(key: 'token', value: loginResponse.token);
       await storage.write(
         key: 'user',
         value: json.encode(loginResponse.user.toJson()),
       );
+      ref?.read(authTokenProvider.notifier).autoLogin();
       state = GenericResponseModel.fromJson(
         responses.data,
         status: ResponseStatus.success,
@@ -67,5 +70,12 @@ class SignInNotifier extends StateNotifier<GenericResponseModel<UserProfile>> {
     var profilePicture = (ItaApiUtils.profilePicture);
     var headers = ItaApiUtils.getOptions(ref).headers;
     return (profilePicture, headers);
+  }
+
+  Future<void> logout() async {
+    await storage.delete(key: 'token');
+    await storage.delete(key: 'user');
+    await storage.deleteAll();
+    state = GenericResponseModel();
   }
 }

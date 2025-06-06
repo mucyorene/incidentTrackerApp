@@ -4,7 +4,6 @@ import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:go_router/go_router.dart';
 import 'package:incident_tracker_app/ita_providers/common_providers.dart';
 import 'package:incident_tracker_app/models/core_res.dart';
 import 'dart:developer';
@@ -162,9 +161,6 @@ class ItaApiUtils {
   }
 
   static GenericResponseModel<T> catchException<T>(e) {
-    // Sentry.captureException(
-    //   e,
-    // );
     try {
       if (kDebugMode) {
         print(e);
@@ -172,10 +168,6 @@ class ItaApiUtils {
       }
     } catch (e) {
       debugPrint("Another error Type");
-      // Sentry.captureException(
-      //   e,
-      //   stackTrace: t,
-      // );
     }
 
     return GenericResponseModel<T>(
@@ -217,52 +209,7 @@ void showSnackBar(
       ),
       backgroundColor: getSnackBarColor(status),
       duration: Duration(seconds: duration),
-      action:
-          statusCode == 500
-              ? SnackBarAction(
-                label: "Report",
-                onPressed: () {
-                  // GoRouter.of(context).push("/reportIssue");
-                },
-              )
-              : statusCode == 401
-              ? SnackBarAction(
-                label: "Sign in",
-                onPressed: () {
-                  showDialog(
-                    context: context,
-                    barrierDismissible: false,
-                    builder: (context) {
-                      return AlertDialog(
-                        title: const Text("Sign in again"),
-                        // title: const Text("Session expired"),
-                        content: const Text(
-                          "You need to sign in, after session expiration",
-                        ),
-                        // content: const Text("You are required to sign in again into your account"),
-                        actions: [
-                          Consumer(
-                            builder: (context, ref, w) {
-                              return TextButton(
-                                onPressed: () {
-                                  // ref
-                                  //     .read(profileProvider.notifier)
-                                  //     .clear();
-                                  context.go("/login");
-                                },
-                                child: const Text("Sign in"),
-                                // child: const Text("Sign in")
-                              );
-                            },
-                          ),
-                        ],
-                      );
-                    },
-                  );
-                },
-              )
-              : null,
+      action: SnackBarAction(label: "Report", onPressed: () {}),
     ),
   );
 }
-

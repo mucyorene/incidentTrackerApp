@@ -68,7 +68,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     ),
                   ),
                   Text(
-                    "${userState.data?.user?.firstName ?? "-"} ${userState.data?.user?.lastName ?? "-"}",
+                    "${userState.data?.user.firstName ?? "-"} ${userState.data?.user.lastName ?? "-"}",
                     style: const TextStyle(fontSize: 22),
                   ),
                   SizedBox(height: 15),
@@ -77,12 +77,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                     children: [
                       InkWell(
                         onTap:
-                            userState.data?.user?.email == null
+                            userState.data?.user.email == null
                                 ? null
                                 : () {
                                   final Uri emailLaunchUri = Uri(
                                     scheme: 'mailto',
-                                    path: userState.data?.user?.email ?? "-",
+                                    path: userState.data?.user.email ?? "-",
                                   );
                                   _launch(emailLaunchUri);
                                 },
@@ -92,7 +92,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           child: CircleAvatar(
                             radius: 23,
                             backgroundColor:
-                                userState.data?.user?.email == null
+                                userState.data?.user.email == null
                                     ? Colors.grey.shade300
                                     : errorInfoColor,
                             child: Icon(
@@ -108,7 +108,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                         onTap: () {
                           final Uri smsLaunchUri = Uri(
                             scheme: 'sms',
-                            path: '${userState.data?.user?.phone}',
+                            path: '${userState.data?.user.phone}',
                           );
                           _launch(smsLaunchUri);
                         },
@@ -129,12 +129,12 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       const SizedBox(width: 15),
                       InkWell(
                         onTap:
-                            userState.data?.user?.phone == null
+                            userState.data?.user.phone == null
                                 ? null
                                 : () {
                                   final Uri smsLaunchUri = Uri(
                                     scheme: 'tel',
-                                    path: '${userState.data?.user?.phone}',
+                                    path: '${userState.data?.user.phone}',
                                   );
                                   _launch(smsLaunchUri);
                                 },
@@ -143,7 +143,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                           padding: const EdgeInsets.all(3.0),
                           child: CircleAvatar(
                             backgroundColor:
-                                userState.data?.user?.phone == null
+                                userState.data?.user.phone == null
                                     ? Colors.grey.shade300
                                     : greenColor,
                             radius: 23,
@@ -151,7 +151,7 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                               Icons.phone,
                               size: 18,
                               color:
-                                  userState.data?.user?.phone == null
+                                  userState.data?.user.phone == null
                                       ? Colors.grey
                                       : Colors.white,
                             ),
@@ -184,20 +184,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   ListTile(
                     title: Text("Full names"),
                     subtitle: Text(
-                      "${userState.data?.user?.firstName} ${userState.data?.user?.lastName}",
+                      "${userState.data?.user.firstName} ${userState.data?.user.lastName}",
                     ),
                     leading: Icon(Icons.ac_unit),
                   ),
                   const Divider(height: 5),
                   ListTile(
                     title: Text("Account type"),
-                    subtitle: Text(userState.data?.user?.accountType ?? "-"),
+                    subtitle: Text(userState.data?.user.accountType ?? "-"),
                     leading: Icon(Icons.account_balance_wallet),
                   ),
                   const Divider(height: 5),
                   ListTile(
                     title: Text("Gender"),
-                    subtitle: Text(userState.data?.user?.gender ?? "-"),
+                    subtitle: Text(userState.data?.user.gender ?? "-"),
                     leading: Icon(Icons.generating_tokens_outlined),
                   ),
                   Padding(
@@ -222,13 +222,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   ),
                   ListTile(
                     title: Text("Phone"),
-                    subtitle: Text(userState.data?.user?.phone ?? "-"),
+                    subtitle: Text(userState.data?.user.phone ?? "-"),
                     leading: Icon(Icons.phone_in_talk_rounded),
                   ),
                   const Divider(height: 5),
                   ListTile(
                     title: Text("Email"),
-                    subtitle: Text(userState.data?.user?.email ?? "-"),
+                    subtitle: Text(userState.data?.user.email ?? "-"),
                     leading: Icon(Icons.email_outlined),
                   ),
                   ListTile(
