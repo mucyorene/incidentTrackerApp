@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:incident_tracker_app/theme/styles.dart';
 import 'package:incident_tracker_app/utils/ita_api_utils.dart';
+import 'package:incident_tracker_app/views/incident/upload_image_options_widget.dart';
 
 class CreateIncidentScreen extends ConsumerStatefulWidget {
   const CreateIncidentScreen({super.key});
@@ -261,18 +262,7 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
                                 padding: const EdgeInsets.only(top: 30),
                                 child: GestureDetector(
                                   onTap: () {
-                                    var w = SafeArea(
-                                      child: SingleChildScrollView(
-                                        child: Column(
-                                          children: [
-                                            Text(
-                                              "Upload profile picture",
-                                              style: TextStyle(fontSize: 20),
-                                            ),
-                                          ],
-                                        ),
-                                      ),
-                                    );
+                                    var w = UploadImageOptionsWidget();
                                     showWidgetDialog(
                                       MediaQuery.of(context).size.width,
                                       context,
