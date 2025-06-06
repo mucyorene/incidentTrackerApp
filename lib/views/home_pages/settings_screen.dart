@@ -35,11 +35,22 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             Padding(
               padding: const EdgeInsets.only(top: 30),
               child: ListTile(
-                title: Text("APP NAME"),
-                subtitle: Text("Incident Tracker App"),
+                title: Text(
+                  "INCIDENT TRACKER",
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
               ),
             ),
-            ListTile(title: Text("Language")),
+            ListTile(
+              title: Text("Language"),
+              onTap: () {},
+              leading: Icon(Icons.language),
+            ),
+            ListTile(
+              title: Text("Logout"),
+              onTap: () {},
+              leading: Icon(Icons.logout_outlined),
+            ),
             Divider(height: 5),
             const SizedBox(height: 30),
             Text(
