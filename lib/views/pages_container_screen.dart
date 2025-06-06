@@ -17,12 +17,21 @@ class _PagesContainerScreenState extends ConsumerState<PagesContainerScreen> {
   var activePageProvider = StateProvider<int>((ref) => 0);
   var page = 0;
   PageController pageController = PageController();
+  var pages = ["Home", "My profile", "Settings"];
 
   @override
   Widget build(BuildContext context) {
     var currentPage = ref.watch(activePageProvider);
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(
+          pages[currentPage],
+          style: TextStyle(
+            color: Colors.white,
+          ),
+        ),
+        centerTitle: true,
+      ),
       body: PageView(
         onPageChanged: (i) {
           ref.read(activePageProvider.notifier).state = i;

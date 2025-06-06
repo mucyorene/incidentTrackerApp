@@ -12,6 +12,8 @@ import 'dart:developer';
 class ItaApiUtils {
   static String baseUrl = "http://197.243.1.84:3020";
   static String login = "$baseUrl/users/login";
+  static String profilePicture =
+      "$baseUrl/uploads//users/profilePicture-1748607340320-742478406.jpg";
   static String responseErrorMessage = "Response error message";
   static String errorMessage = "There is error happened";
 
@@ -38,13 +40,11 @@ class ItaApiUtils {
 
   static BaseOptions getOptions(Ref? ref) {
     var token = ref?.read(authTokenProvider);
-    print("HERE IS TOKENS: ${token?.token}");
     var lang = "en-US";
-    // var lang = ref?.read(languageProvider);
     return BaseOptions(
       responseType: ResponseType.json,
       headers: {
-        "Authorization": "Bearer $token",
+        "Authorization": "Bearer ${token?.data?.token}",
         "lang": lang,
         "Accept": "application/json",
       },

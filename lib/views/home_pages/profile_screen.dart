@@ -1,4 +1,5 @@
-import 'package:extended_image/extended_image.dart' show ExtendedImage;
+import 'package:extended_image/extended_image.dart'
+    show ExtendedImage, LoadState;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:incident_tracker_app/ita_providers/common_providers.dart';
@@ -32,6 +33,8 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     var userState = ref.watch(authTokenProvider);
+    var profilePicture =
+        ref.read(profilePictureProvider.notifier).getProfilePicture();
     return Scaffold(
       body: SafeArea(
         child: NestedScrollView(
@@ -45,23 +48,22 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(30.0),
-                    child: Builder(
-                      builder: (context) {
-                        return ExtendedImage.network(
-                          "https://img.freepik.com/premium-vector/character-avatar-isolated_729149-194801.jpg?semt=ais_hybrid&w=740",
-                          // headers: Map<String, String>.from(headers),
-                          fit: BoxFit.cover,
-                          shape: BoxShape.circle,
-                          cache: true,
-                          width: 150,
-                          height: 150,
-                          cacheMaxAge: const Duration(minutes: 10),
-                          gaplessPlayback: true,
-                          clearMemoryCacheWhenDispose: true,
-                          loadStateChanged: (state) {
-                            return CircleAvatar();
-                          },
-                        );
+                    child: ExtendedImage.network(
+                      profilePicture.$1,
+                      headers: Map<String, String>.from(profilePicture.$2),
+                      fit: BoxFit.cover,
+                      shape: BoxShape.circle,
+                      cache: true,
+                      width: 150,
+                      height: 150,
+                      cacheMaxAge: const Duration(minutes: 10),
+                      gaplessPlayback: true,
+                      clearMemoryCacheWhenDispose: false,
+                      loadStateChanged: (state) {
+                        if (state.extendedImageLoadState == LoadState.failed) {
+                          return Icon(Icons.person_3_rounded, size: 20);
+                        }
+                        return null;
                       },
                     ),
                   ),

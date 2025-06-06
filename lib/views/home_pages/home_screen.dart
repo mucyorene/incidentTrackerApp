@@ -13,8 +13,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(backgroundColor: Colors.white),
-      body: SingleChildScrollView(),
+      body: NestedScrollView(
+        headerSliverBuilder: (context, isScrolled) {
+          return [];
+        },
+        body: SingleChildScrollView(child: Column(children: [])),
+      ),
     );
   }
 }

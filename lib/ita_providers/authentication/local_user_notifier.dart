@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:incident_tracker_app/models/local_user.dart' as localUser;
+import 'package:incident_tracker_app/utils/ita_api_utils.dart';
 import 'package:incident_tracker_app/views/models/core_res.dart';
 
 class LocalUserNotifier
@@ -27,5 +28,11 @@ class LocalUserNotifier
       state = GenericResponseModel(status: ResponseStatus.failed);
     }
     return state;
+  }
+
+  (String, Map<String, dynamic>) getProfilePicture() {
+    var profilePicture = (ItaApiUtils.profilePicture);
+    var headers = ItaApiUtils.getOptions(ref).headers;
+    return (profilePicture, headers);
   }
 }

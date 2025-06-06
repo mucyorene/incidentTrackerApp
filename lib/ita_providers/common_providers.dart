@@ -7,3 +7,7 @@ var authTokenProvider = StateNotifierProvider<
   LocalUserNotifier,
   GenericResponseModel<localUser.User>
 >((ref) => LocalUserNotifier(ref));
+var profilePictureProvider = StateNotifierProvider<
+  LocalUserNotifier,
+  GenericResponseModel<localUser.User>
+>((ref) => LocalUserNotifier(ref));
