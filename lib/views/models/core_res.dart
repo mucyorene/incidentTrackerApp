@@ -16,6 +16,7 @@ class GenericResponseModel<T> {
   DateTime? timestamp;
   List<String> errors;
   ResponseStatus status;
+  Map<String, dynamic> errorsObject;
   int statusCode;
   T? data;
 
@@ -34,6 +35,7 @@ class GenericResponseModel<T> {
     this.status = ResponseStatus.none,
     this.data,
     this.statusCode = 0,
+    this.errorsObject = const {},
   });
 
   factory GenericResponseModel.fromJson(
