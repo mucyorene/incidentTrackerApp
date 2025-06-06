@@ -1,6 +1,5 @@
 import 'dart:convert';
-
-import 'package:dio/dio.dart' show BaseOptions, Dio, DioException;
+import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart'
     show FlutterSecureStorage;
@@ -27,6 +26,7 @@ class SignInNotifier
         data: {"email": email, "password": password},
       );
       var loginResponse = LoginResponse.fromJson(responses.data);
+      print("HERE IS TOKEN: ${loginResponse.token}");
       await storage.write(key: 'token', value: loginResponse.token);
       await storage.write(
         key: 'user',

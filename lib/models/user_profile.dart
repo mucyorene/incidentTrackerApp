@@ -53,6 +53,14 @@ class LoginResponse {
     user: User.fromJson(json['user']),
     token: json['token'],
   );
+
+  factory LoginResponse.fromJsonLocal(Map<String, dynamic> json) =>
+      LoginResponse(
+        user: User.fromJson(json['user']),
+        token: json['token'],
+        error: json['error'] ?? "",
+        message: json['message'] ?? "",
+      );
 }
 
 class User {
@@ -102,7 +110,7 @@ class User {
     email: json['email'],
     phone: json['phone'],
     password: json['password'],
-    receiveNotificationsEmail: json['recieveNotificationsEmail'],
+    receiveNotificationsEmail: json['receiveNotificationsEmail'],
     accountType: json['accountType'],
     status: json['status'],
     pictureUrl: json['pictureUrl'],

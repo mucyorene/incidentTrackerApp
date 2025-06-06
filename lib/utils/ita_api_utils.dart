@@ -5,7 +5,7 @@ import 'package:flutter/foundation.dart' show kDebugMode;
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:incident_tracker_app/views/ita_providers/common_providers.dart';
+import 'package:incident_tracker_app/ita_providers/common_providers.dart';
 import 'package:incident_tracker_app/views/models/core_res.dart';
 import 'dart:developer';
 
@@ -38,6 +38,7 @@ class ItaApiUtils {
 
   static BaseOptions getOptions(Ref? ref) {
     var token = ref?.read(authTokenProvider);
+    print("HERE IS TOKENS: ${token?.token}");
     var lang = "en-US";
     // var lang = ref?.read(languageProvider);
     return BaseOptions(
