@@ -201,14 +201,20 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   ListTile(
                     title: Text("Full names"),
                     subtitle: Text("Rene MUCYO TUYISENGE"),
+                    leading: Icon(Icons.ac_unit),
                   ),
                   const Divider(height: 5),
                   ListTile(
                     title: Text("Account type"),
                     subtitle: Text("Super"),
+                    leading: Icon(Icons.account_balance_wallet),
                   ),
                   const Divider(height: 5),
-                  ListTile(title: Text("Gender"), subtitle: Text("Male")),
+                  ListTile(
+                    title: Text("Gender"),
+                    subtitle: Text("Male"),
+                    leading: Icon(Icons.generating_tokens_outlined),
+                  ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15),
                     child: Row(
@@ -228,11 +234,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   ListTile(
                     title: Text("Phone"),
                     subtitle: Text("+250784494820"),
+                    leading: Icon(Icons.phone_in_talk_rounded),
                   ),
                   const Divider(height: 5),
                   ListTile(
                     title: Text("Email"),
                     subtitle: Text("renemucyo1@gmail.com"),
+                    leading: Icon(Icons.email_outlined),
                   ),
                   ListTile(
                     title: Text(
