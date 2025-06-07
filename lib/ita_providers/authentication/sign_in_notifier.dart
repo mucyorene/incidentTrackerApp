@@ -51,7 +51,6 @@ class SignInNotifier extends StateNotifier<GenericResponseModel<UserProfile>> {
   Future<void> logout() async {
     await storage.delete(key: 'token');
     await storage.delete(key: 'user');
-    await storage.deleteAll();
     state = GenericResponseModel();
   }
 }

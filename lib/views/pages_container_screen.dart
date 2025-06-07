@@ -1,5 +1,6 @@
 import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:incident_tracker_app/views/home_pages/home_screen.dart';
 import 'package:incident_tracker_app/views/home_pages/profile_screen.dart';
@@ -25,6 +26,9 @@ class _PagesContainerScreenState extends ConsumerState<PagesContainerScreen> {
     return Scaffold(
       appBar: AppBar(
         title: Text(pages[currentPage], style: TextStyle(color: Colors.black)),
+        systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
+          systemNavigationBarColor: Colors.transparent,
+        ),
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       ),
       body: PageView(

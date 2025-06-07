@@ -209,7 +209,10 @@ void showSnackBar(
       ),
       backgroundColor: getSnackBarColor(status),
       duration: Duration(seconds: duration),
-      action: SnackBarAction(label: "Report", onPressed: () {}),
+      action: SnackBarAction(
+        label: statusCode == 500 ? "Report" : "",
+        onPressed: () {},
+      ),
     ),
   );
 }
