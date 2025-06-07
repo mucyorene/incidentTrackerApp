@@ -174,10 +174,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             color: Colors.grey,
                           ),
                         ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Icon(Icons.edit, size: 20, color: Colors.grey),
-                        ),
                       ],
                     ),
                   ),
@@ -212,10 +208,6 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                             fontWeight: FontWeight.w600,
                             color: Colors.grey,
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Icon(Icons.edit, size: 20, color: Colors.grey),
                         ),
                       ],
                     ),

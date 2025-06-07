@@ -3,18 +3,18 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:incident_tracker_app/utils/custom_model_app_bar.dart';
 
-class UploadImageOptionsWidget extends ConsumerStatefulWidget {
+class UploadImageUtilityWidget extends ConsumerStatefulWidget {
   final Function selectSource;
 
-  const UploadImageOptionsWidget({super.key, required this.selectSource});
+  const UploadImageUtilityWidget({super.key, required this.selectSource});
 
   @override
-  ConsumerState<UploadImageOptionsWidget> createState() =>
-      _UploadImageOptionsWidgetState();
+  ConsumerState<UploadImageUtilityWidget> createState() =>
+      _UploadImageUtilityWidgetState();
 }
 
-class _UploadImageOptionsWidgetState
-    extends ConsumerState<UploadImageOptionsWidget> {
+class _UploadImageUtilityWidgetState
+    extends ConsumerState<UploadImageUtilityWidget> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
@@ -25,7 +25,7 @@ class _UploadImageOptionsWidgetState
               padding: const EdgeInsets.only(top: 10),
               child: customAppbar(
                 context,
-                "Upload profile picture",
+                "Upload incident image",
                 onClose: () {},
               ),
             ),

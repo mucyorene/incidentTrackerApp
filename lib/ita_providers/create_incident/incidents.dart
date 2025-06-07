@@ -17,16 +17,14 @@ class IncidentsNotifier
   Future<GenericResponseModel<List<CreateIncident>>> getIncidents() async {
     state = GenericResponseModel(status: ResponseStatus.loading);
     try {
-      var incident = await storage.read(key: 'incident');
-      if (incident != null) {
-        var items = List<CreateIncident>.from(
-          jsonDecode(incident).map((e) => CreateIncident.fromJson(e)),
-        );
-        state = GenericResponseModel(
-          status: ResponseStatus.success,
-          data: items.reversed.toList(),
-        );
-      }
+      var incident = await getItems();
+      var items = List<CreateIncident>.from(
+        incident.map((e) => CreateIncident.fromJson(e)),
+      );
+      state = GenericResponseModel(
+        status: items.isEmpty ? ResponseStatus.empty : ResponseStatus.success,
+        data: items.reversed.toList(),
+      );
       return state;
     } on DioException catch (e) {
       state = ItaApiUtils.catchDioException(e);
@@ -35,5 +33,13 @@ class IncidentsNotifier
       state = ItaApiUtils.catchException(e);
       return state;
     }
+  }
+
+  Future<List<Map<String, dynamic>>> getItems() async {
+    String? data = await storage.read(key: 'incident');
+    if (data != null) {
+      return List<Map<String, dynamic>>.from(jsonDecode(data));
+    }
+    return [];
   }
 }

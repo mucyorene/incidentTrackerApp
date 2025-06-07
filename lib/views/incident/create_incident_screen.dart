@@ -11,7 +11,7 @@ import 'package:incident_tracker_app/models/create_incident.dart';
 import 'package:incident_tracker_app/theme/styles.dart';
 import 'package:incident_tracker_app/theme/theme.dart';
 import 'package:incident_tracker_app/utils/ita_api_utils.dart';
-import 'package:incident_tracker_app/views/incident/upload_image_options_widget.dart';
+import 'package:incident_tracker_app/views/incident/upload_image_utility.dart';
 
 class CreateIncidentScreen extends ConsumerStatefulWidget {
   const CreateIncidentScreen({super.key});
@@ -75,13 +75,13 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
 
   @override
   void initState() {
-    ref.read(selectedFileProvider);
+    ref.refresh(selectedFileProvider);
     super.initState();
   }
 
   var selectedFilesProvider = StateProvider<List<PlatformFile>>((ref) => []);
 
-  pickMainImage(bool fromGallery) async {
+  pickProfilePicture(bool fromGallery) async {
     var result = await ref
         .read(uploadProfileProvider.notifier)
         .pickProfilePicture(source: fromGallery ? "gallery" : "camera");
@@ -403,8 +403,8 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
                                 padding: const EdgeInsets.only(top: 30),
                                 child: GestureDetector(
                                   onTap: () {
-                                    var w = UploadImageOptionsWidget(
-                                      selectSource: pickMainImage,
+                                    var w = UploadImageUtilityWidget(
+                                      selectSource: pickProfilePicture,
                                     );
                                     showWidgetDialog(
                                       MediaQuery.of(context).size.width,

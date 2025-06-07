@@ -24,13 +24,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var incidentDetails = ref.watch(incidentsProvider);
+    print("HERE IS STATUS: ${incidentDetails.status}");
     return Scaffold(
       body: SingleChildScrollView(
         child: RefreshIndicator(
           onRefresh: () {
-            return ref
-                .read(incidentsProvider.notifier)
-                .getIncidents();
+            return ref.read(incidentsProvider.notifier).getIncidents();
           },
           child:
               [ResponseStatus.loading].contains(incidentDetails.status)
@@ -40,6 +39,28 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     children: [
                       const Center(child: CircularProgressIndicator()),
                     ],
+                  )
+                  : [ResponseStatus.empty].contains(incidentDetails.status)
+                  ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.hourglass_empty_rounded,
+                          size: 50,
+                          color: primaryColor,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          "There are no incidents added",
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
                   )
                   : [ResponseStatus.success].contains(incidentDetails.status)
                   ? ListView.separated(
