@@ -37,7 +37,7 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
   validate() async {
     if (_formKey.currentState!.validate()) {
       var category = ref.read(selectedCategoryProvider);
-      var status = ref.read(selectedCategoryProvider);
+      var status = ref.read(selectedStatusProvider);
       var title = titleController.text;
       var description = descriptionController.text;
       var location = locationController.text;
@@ -59,18 +59,16 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
           .createIncident(incident: createIncident);
 
       if (info.status == ResponseStatus.success) {
+        print("SUCCESS ?");
         Navigator.pop(context);
         showSnackBar(
           context,
           "Incident created successfully",
           status: ResponseStatus.success,
         );
+        ref.read(incidentsProvider.notifier).getIncidents();
       } else {
-        showSnackBar(
-          context,
-          info.errorMessage,
-          status: ResponseStatus.success,
-        );
+        showSnackBar(context, "Error happened", status: ResponseStatus.error);
       }
     }
   }
