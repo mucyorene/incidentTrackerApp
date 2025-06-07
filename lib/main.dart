@@ -2,13 +2,19 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:hive_flutter/hive_flutter.dart' show Hive, HiveX;
+import 'package:incident_tracker_app/models/create_incident.dart';
 import 'package:incident_tracker_app/routers/ita_routers.dart' show itaRouters;
 import 'package:incident_tracker_app/theme/theme.dart';
 
-void main() {
+void main() async {
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(statusBarColor: Colors.transparent),
   );
+  WidgetsFlutterBinding.ensureInitialized();
+  await Hive.initFlutter();
+  Hive.registerAdapter(CreateIncidentAdapter());
+  await Hive.openBox<CreateIncident>('incidentDb');
   runApp(
     EasyLocalization(
       supportedLocales: [const Locale('en', 'US'), const Locale('fr', 'FR')],
