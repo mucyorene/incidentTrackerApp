@@ -14,7 +14,9 @@ import 'package:incident_tracker_app/utils/ita_api_utils.dart';
 import 'package:incident_tracker_app/views/incident/upload_image_utility.dart';
 
 class CreateIncidentScreen extends ConsumerStatefulWidget {
-  const CreateIncidentScreen({super.key});
+  final String? incidentTitle;
+
+  const CreateIncidentScreen({super.key, this.incidentTitle});
 
   @override
   ConsumerState<CreateIncidentScreen> createState() =>
@@ -75,8 +77,39 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
 
   @override
   void initState() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.incidentTitle != null) {
+        prefill();
+      }
+    });
     ref.refresh(selectedFileProvider);
     super.initState();
+  }
+
+  prefill() {
+    var incidentState = ref.read(incidentsProvider);
+    if (incidentState.status == ResponseStatus.success) {
+      var incident = incidentState.data?.firstWhere(
+        (element) => element.title == widget.incidentTitle,
+      );
+      if (incident != null) {
+        titleController.text = incident.title;
+        descriptionController.text = incident.description;
+        categoryController.text = incident.category;
+        locationController.text = incident.location;
+        dateTimeController.text = incident.dateTime;
+        statusController.text = incident.status;
+        photoController.text = incident.photo ?? "";
+        ref.read(selectedCategoryProvider.notifier).state = incident.category;
+        ref.read(selectedStatusProvider.notifier).state = incident.status;
+        ref.read(selectedFileProvider.notifier).state = PlatformFile(
+          name: incident.photo ?? "",
+          size: 100,
+          bytes: null,
+          path: incident.photo,
+        );
+      }
+    }
   }
 
   var selectedFilesProvider = StateProvider<List<PlatformFile>>((ref) => []);

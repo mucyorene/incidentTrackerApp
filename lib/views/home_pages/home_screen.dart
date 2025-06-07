@@ -4,6 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:incident_tracker_app/ita_providers/create_incident/providers.dart';
 import 'package:incident_tracker_app/models/core_res.dart';
 import 'package:incident_tracker_app/theme/theme.dart';
+import 'package:incident_tracker_app/utils/ita_api_utils.dart';
+import 'package:incident_tracker_app/views/incident/widgets/incident_details.dart'
+    show IncidentDetails;
+import 'package:incident_tracker_app/views/incident/widgets/incident_item.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -24,7 +28,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     var incidentDetails = ref.watch(incidentsProvider);
-    print("HERE IS STATUS: ${incidentDetails.status}");
     return Scaffold(
       body: SingleChildScrollView(
         child: RefreshIndicator(
@@ -67,10 +70,16 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                     shrinkWrap: true,
                     itemBuilder: (cxt, i) {
                       var dataItem = incidentDetails.data?[i];
-                      return ListTile(
-                        title: Text(dataItem?.title ?? ""),
-                        subtitle: Text(dataItem?.dateTime ?? "-"),
-                        trailing: Text(dataItem?.status ?? "-"),
+                      return IncidentItem(
+                        createIncident: dataItem!,
+                        onTap: () {
+                          var w = IncidentDetails(incident: dataItem);
+                          showWidgetDialog(
+                            MediaQuery.of(context).size.width,
+                            context,
+                            w,
+                          );
+                        },
                       );
                     },
                     separatorBuilder: (x, _) {
