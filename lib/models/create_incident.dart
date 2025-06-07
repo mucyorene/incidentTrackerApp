@@ -5,7 +5,7 @@ part 'create_incident.g.dart';
 @HiveType(typeId: 0)
 class CreateIncident extends HiveObject {
   @HiveField(0)
-  int? id; // Auto-incrementing ID
+  int? id;
 
   @HiveField(1)
   String title;

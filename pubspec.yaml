@@ -48,5 +48,5 @@ flutter:
   assets:
     - assets/translations/
     - assets/images/
-  #   - images/a_dot_burr.jpeg
+    - assets/flags/
   #   - images/a_dot_ham.jpeg
