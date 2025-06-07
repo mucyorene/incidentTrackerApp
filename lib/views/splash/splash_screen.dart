@@ -24,7 +24,6 @@ class _SplashScreenState extends ConsumerState<SplashScreen> {
   init() async {
     Future.delayed(const Duration(seconds: 3)).then((value) async {
       var info = ref.read(authTokenProvider);
-      print("HERE IS INFO: ${info.status}");
       if (info.status == ResponseStatus.success) {
         var userState = info.data;
         if (userState?.token != null) {

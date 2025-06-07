@@ -19,8 +19,12 @@ dependencies:
   dio: ^5.5.0+1
   image_picker: ^1.0.8
   file_picker: ^8.0.0+1
-  flutter_secure_storage: ^9.2.2
+  shared_preferences: ^2.5.3
 
+  #DB
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  path_provider: ^2.1.2
 
   #UI Packages
   google_fonts: ^5.1.0
@@ -31,6 +35,8 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  hive_generator: ^2.0.1
+  build_runner: ^2.4.6
 
   flutter_lints: ^5.0.0
 
