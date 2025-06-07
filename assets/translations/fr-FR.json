@@ -3,5 +3,15 @@
     "home": "Accueil",
     "profile": "Mon Profil",
     "settings": "Paramètres"
+  },
+  "settings": {
+    "language": "Langue",
+    "logout": "Déconnexion",
+    "version": "Version",
+    "changeLanguageModel": {
+      "title": "Changer de langue",
+      "english": "Anglais",
+      "french": "Français"
+    }
   }
 }

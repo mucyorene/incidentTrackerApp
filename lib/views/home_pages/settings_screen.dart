@@ -36,10 +36,11 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             children: [
               Padding(
                 padding: const EdgeInsets.fromLTRB(15.0, 15.0, 7.0, 7.0),
-                child: Text(
-                  "Change language",
-                  style: Theme.of(context).textTheme.titleLarge,
-                ),
+                child:
+                    Text(
+                      "settings.changeLanguageModel.title",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ).tr(),
               ),
               Column(
                 mainAxisSize: MainAxisSize.min,
@@ -47,7 +48,7 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
                     languages
                         .map(
                           (e) => RadioListTile<String>(
-                            title: Text("${e['name']}"),
+                            title: Text("${e['name']}").tr(),
                             groupValue: "${e['code']}",
                             value: locale.languageCode,
                             onChanged: (l) async {

@@ -3,5 +3,15 @@
     "home": "Home",
     "profile": "My Profile",
     "settings": "Settings"
+  },
+  "settings": {
+    "language": "Language",
+    "logout": "Logout",
+    "version": "Version",
+    "changeLanguageModel": {
+      "title": "Change language",
+      "english": "English",
+      "french": "French"
+    }
   }
 }
