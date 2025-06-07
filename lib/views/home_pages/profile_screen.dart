@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:extended_image/extended_image.dart'
     show ExtendedImage, LoadState;
 import 'package:flutter/material.dart';
@@ -167,22 +168,18 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          "PERSONAL INFO",
+                          "profileScreen.personalInfo.title",
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
                             color: Colors.grey,
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Icon(Icons.edit, size: 20, color: Colors.grey),
-                        ),
+                        ).tr(),
                       ],
                     ),
                   ),
                   ListTile(
-                    title: Text("Full names"),
+                    title: Text("profileScreen.personalInfo.fullNames").tr(),
                     subtitle: Text(
                       "${userState.data?.user.firstName} ${userState.data?.user.lastName}",
                     ),
@@ -190,13 +187,13 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                   ),
                   const Divider(height: 5),
                   ListTile(
-                    title: Text("Account type"),
+                    title: Text("profileScreen.personalInfo.accountType").tr(),
                     subtitle: Text(userState.data?.user.accountType ?? "-"),
                     leading: Icon(Icons.account_balance_wallet),
                   ),
                   const Divider(height: 5),
                   ListTile(
-                    title: Text("Gender"),
+                    title: Text("profileScreen.personalInfo.gender").tr(),
                     subtitle: Text(userState.data?.user.gender ?? "-"),
                     leading: Icon(Icons.generating_tokens_outlined),
                   ),
@@ -206,39 +203,26 @@ class _ProfileScreenState extends ConsumerState<ProfileScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         const Text(
-                          "CONTACT INFO",
+                          "profileScreen.contactInfo.title",
                           style: TextStyle(
                             fontSize: 15,
                             fontWeight: FontWeight.w600,
                             color: Colors.grey,
                           ),
-                        ),
-                        GestureDetector(
-                          onTap: () {},
-                          child: Icon(Icons.edit, size: 20, color: Colors.grey),
-                        ),
+                        ).tr(),
                       ],
                     ),
                   ),
                   ListTile(
-                    title: Text("Phone"),
+                    title: Text("profileScreen.contactInfo.phone").tr(),
                     subtitle: Text(userState.data?.user.phone ?? "-"),
                     leading: Icon(Icons.phone_in_talk_rounded),
                   ),
                   const Divider(height: 5),
                   ListTile(
-                    title: Text("Email"),
+                    title: Text("profileScreen.contactInfo.email").tr(),
                     subtitle: Text(userState.data?.user.email ?? "-"),
                     leading: Icon(Icons.email_outlined),
-                  ),
-                  ListTile(
-                    title: Text(
-                      "Delete profile",
-                      style: TextStyle(color: Colors.redAccent),
-                    ),
-                    onTap: () {
-                      // confirmDelete();
-                    },
                   ),
                   SizedBox(height: 30),
                 ],

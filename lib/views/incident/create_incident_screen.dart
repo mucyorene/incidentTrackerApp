@@ -11,10 +11,12 @@ import 'package:incident_tracker_app/models/create_incident.dart';
 import 'package:incident_tracker_app/theme/styles.dart';
 import 'package:incident_tracker_app/theme/theme.dart';
 import 'package:incident_tracker_app/utils/ita_api_utils.dart';
-import 'package:incident_tracker_app/views/incident/upload_image_options_widget.dart';
+import 'package:incident_tracker_app/views/incident/upload_image_utility.dart';
 
 class CreateIncidentScreen extends ConsumerStatefulWidget {
-  const CreateIncidentScreen({super.key});
+  final String? incidentTitle;
+
+  const CreateIncidentScreen({super.key, this.incidentTitle});
 
   @override
   ConsumerState<CreateIncidentScreen> createState() =>
@@ -54,12 +56,19 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
         photo: photo?.path ?? "",
       );
 
-      var info = await ref
-          .read(createIncidentProvider.notifier)
-          .createIncident(incident: createIncident);
+      var info =
+          widget.incidentTitle == null
+              ? await ref
+                  .read(createIncidentProvider.notifier)
+                  .createIncident(incident: createIncident)
+              : await ref
+                  .read(createIncidentProvider.notifier)
+                  .editIncident(
+                    title: "${widget.incidentTitle}",
+                    incident: createIncident,
+                  );
 
       if (info.status == ResponseStatus.success) {
-        print("SUCCESS ?");
         Navigator.pop(context);
         showSnackBar(
           context,
@@ -68,20 +77,53 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
         );
         ref.read(incidentsProvider.notifier).getIncidents();
       } else {
-        showSnackBar(context, "Error happened", status: ResponseStatus.error);
+        showSnackBar(context, "Error happened", status: ResponseStatus.failed);
       }
     }
   }
 
   @override
   void initState() {
-    ref.read(selectedFileProvider);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (widget.incidentTitle != null) {
+        prefill();
+      }
+    });
+    ref.refresh(selectedFileProvider);
+    ref.refresh(uploadProfileProvider);
     super.initState();
+  }
+
+  prefill() {
+    var incidentState = ref.read(incidentsProvider);
+    if (incidentState.status == ResponseStatus.success) {
+      var incident = incidentState.data?.firstWhere(
+        (element) => element.title == widget.incidentTitle,
+      );
+      if (incident != null) {
+        titleController.text = incident.title;
+        descriptionController.text = incident.description;
+        categoryController.text = incident.category;
+        locationController.text = incident.location;
+        dateTimeController.text = incident.dateTime;
+        statusController.text = incident.status;
+        photoController.text = incident.photo ?? "";
+        ref.read(selectedCategoryProvider.notifier).state = incident.category;
+        ref.read(selectedStatusProvider.notifier).state = incident.status;
+        ref.read(selectedFileProvider.notifier).state =
+            incident.photo != ""
+                ? PlatformFile(name: "", size: 10, path: incident.photo)
+                : null;
+        if (incident.photo != "") {
+          ref.read(selectedFilesProvider);
+        }
+      }
+    }
   }
 
   var selectedFilesProvider = StateProvider<List<PlatformFile>>((ref) => []);
 
-  pickMainImage(bool fromGallery) async {
+  pickProfilePicture(bool fromGallery) async {
     var result = await ref
         .read(uploadProfileProvider.notifier)
         .pickProfilePicture(source: fromGallery ? "gallery" : "camera");
@@ -98,7 +140,10 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
     var createState = ref.watch(createIncidentProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Create Incident", style: TextStyle(color: Colors.white)),
+        title: Text(
+          widget.incidentTitle == null ? "Create Incident" : "Edit Incident",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: SizedBox.expand(
         child: Padding(
@@ -403,8 +448,8 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
                                 padding: const EdgeInsets.only(top: 30),
                                 child: GestureDetector(
                                   onTap: () {
-                                    var w = UploadImageOptionsWidget(
-                                      selectSource: pickMainImage,
+                                    var w = UploadImageUtilityWidget(
+                                      selectSource: pickProfilePicture,
                                     );
                                     showWidgetDialog(
                                       MediaQuery.of(context).size.width,
@@ -458,7 +503,7 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
                                   child: Stack(
                                     children: [
                                       Image.file(
-                                        File("${createProfileDetails.path}"),
+                                        File(createProfileDetails.path ?? ""),
                                         width:
                                             MediaQuery.of(context).size.width,
                                         height: 150,
@@ -496,8 +541,10 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
                                                 backgroundColor: Colors.white,
                                               ),
                                             )
-                                            : const Text(
-                                              "Save",
+                                            : Text(
+                                              widget.incidentTitle == null
+                                                  ? "Save"
+                                                  : "Edit",
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: Color(0xFFFFFFFF),

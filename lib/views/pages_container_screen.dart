@@ -18,14 +18,22 @@ class _PagesContainerScreenState extends ConsumerState<PagesContainerScreen> {
   var activePageProvider = StateProvider<int>((ref) => 0);
   var page = 0;
   PageController pageController = PageController();
-  var pages = ["Home", "My profile", "Settings"];
+  var pages = [
+    "pageContainer.home",
+    "pageContainer.profile",
+    "pageContainer.settings",
+  ];
 
   @override
   Widget build(BuildContext context) {
     var currentPage = ref.watch(activePageProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text(pages[currentPage], style: TextStyle(color: Colors.black)),
+        title:
+            Text(
+              pages[currentPage],
+              style: TextStyle(color: Colors.black),
+            ).tr(),
         systemOverlayStyle: SystemUiOverlayStyle.dark.copyWith(
           systemNavigationBarColor: Colors.transparent,
         ),

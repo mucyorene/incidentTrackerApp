@@ -29,7 +29,8 @@ final itaRouters = GoRouter(
       path: '/createIncident',
       name: 'CreateIncident',
       builder: (context, state) {
-        return CreateIncidentScreen();
+        var incidentTitle = state.uri.queryParameters['incidentTitle'];
+        return CreateIncidentScreen(incidentTitle: incidentTitle);
       },
     ),
   ],

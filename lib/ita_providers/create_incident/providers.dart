@@ -11,11 +11,18 @@ var uploadProfileProvider = StateNotifierProvider<
   GenericResponseModel<PlatformFile>
 >((ref) => UploadImageNotifier());
 var selectedFileProvider = StateProvider<PlatformFile?>((ref) => null);
+
 var createIncidentProvider = StateNotifierProvider<
   CreateIncidentNotifier,
   GenericResponseModel<CreateIncident>
 >((ref) => CreateIncidentNotifier());
+
 var incidentsProvider = StateNotifierProvider<
+  IncidentsNotifier,
+  GenericResponseModel<List<CreateIncident>>
+>((ref) => IncidentsNotifier());
+
+var deleteIncidentProvider = StateNotifierProvider<
   IncidentsNotifier,
   GenericResponseModel<List<CreateIncident>>
 >((ref) => IncidentsNotifier());

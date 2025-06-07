@@ -1,7 +1,9 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:incident_tracker_app/ita_providers/authentication/providers.dart';
+import 'package:incident_tracker_app/utils/_public_vars.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
@@ -17,6 +19,56 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
   getVersion() async {
     var packageInfo = await PackageInfo.fromPlatform();
     ref.read(versionProvider.notifier).state = packageInfo.version;
+  }
+
+  changeLanguage() {
+    var locale = context.locale;
+    showDialog(
+      context: context,
+      builder: (ctx) {
+        return Dialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(15.0, 15.0, 7.0, 7.0),
+                child:
+                    Text(
+                      "settings.changeLanguageModel.title",
+                      style: Theme.of(context).textTheme.titleLarge,
+                    ).tr(),
+              ),
+              Column(
+                mainAxisSize: MainAxisSize.min,
+                children:
+                    languages
+                        .map(
+                          (e) => RadioListTile<String>(
+                            title: Text("${e['name']}").tr(),
+                            groupValue: "${e['code']}",
+                            value: locale.languageCode,
+                            onChanged: (l) async {
+                              context.setLocale(e['locale'] as Locale);
+                              Navigator.pop(context);
+                            },
+                            secondary: CircleAvatar(
+                              backgroundImage: AssetImage("${e['icon']}"),
+                              radius: 12,
+                            ),
+                            controlAffinity: ListTileControlAffinity.trailing,
+                          ),
+                        )
+                        .toList(),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 
   @override
@@ -44,12 +96,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
             ),
             ListTile(
-              title: Text("Language"),
-              onTap: () {},
+              title: Text("settings.language").tr(),
+              onTap: () {
+                changeLanguage();
+              },
               leading: Icon(Icons.language),
             ),
             ListTile(
-              title: Text("Logout"),
+              title: Text("settings.logout").tr(),
               onTap: () {
                 showDialog(
                   context: context,
@@ -86,9 +140,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             Divider(height: 5),
             const SizedBox(height: 30),
             Text(
-              "Version: $version",
+              "settings.version",
               style: const TextStyle(color: Colors.grey),
-            ),
+            ).tr(args: [version]),
             const SizedBox(height: 40),
           ],
         ),

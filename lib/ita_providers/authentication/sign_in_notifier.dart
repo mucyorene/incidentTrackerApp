@@ -1,23 +1,22 @@
 import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart'
-    show FlutterSecureStorage;
 import 'package:incident_tracker_app/ita_providers/profile/providers.dart';
 import 'package:incident_tracker_app/models/user_profile.dart';
 import 'package:incident_tracker_app/utils/ita_api_utils.dart';
 import 'package:incident_tracker_app/models/core_res.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SignInNotifier extends StateNotifier<GenericResponseModel<UserProfile>> {
   SignInNotifier(this.ref) : super(GenericResponseModel());
   Ref? ref;
 
-  final storage = const FlutterSecureStorage();
-
   Future<GenericResponseModel<UserProfile>> signIn({
     required String email,
     required String password,
   }) async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
     var dio = Dio(ItaApiUtils.getOptions(ref));
     state = GenericResponseModel(status: ResponseStatus.saving);
     try {
@@ -26,11 +25,8 @@ class SignInNotifier extends StateNotifier<GenericResponseModel<UserProfile>> {
         data: {"email": email, "password": password},
       );
       var loginResponse = UserProfile.fromJson(responses.data);
-      await storage.write(key: 'token', value: loginResponse.token);
-      await storage.write(
-        key: 'user',
-        value: json.encode(loginResponse.user.toJson()),
-      );
+      await prefs.setString('token', loginResponse.token);
+      await prefs.setString('user', json.encode(loginResponse.user.toJson()));
       ref?.read(authTokenProvider.notifier).autoLogin();
       state = GenericResponseModel.fromJson(
         responses.data,
@@ -47,10 +43,10 @@ class SignInNotifier extends StateNotifier<GenericResponseModel<UserProfile>> {
     }
   }
 
-
   Future<void> logout() async {
-    await storage.delete(key: 'token');
-    await storage.delete(key: 'user');
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.remove('token');
+    await prefs.remove('user');
     state = GenericResponseModel();
   }
 }

@@ -3,5 +3,29 @@
     "home": "Home",
     "profile": "My Profile",
     "settings": "Settings"
+  },
+  "settings": {
+    "language": "Language",
+    "logout": "Logout",
+    "version": "Version {}",
+    "changeLanguageModel": {
+      "title": "Change language",
+      "english": "English",
+      "french": "French"
+    }
+  },
+  "profileScreen": {
+    "personalInfo": {
+      "title": "PERSONAL INFO",
+      "fullNames": "Full Names",
+      "accountType": "Account type",
+      "gender": "Gender"
+    },
+    "contactInfo": {
+      "title": "CONTACT INFO",
+      "phone": "Phone",
+      "email": "Email"
+    },
+    "deleteProfile": "Delete Profile"
   }
 }

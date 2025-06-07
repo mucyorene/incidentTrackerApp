@@ -4,6 +4,10 @@ import 'package:go_router/go_router.dart';
 import 'package:incident_tracker_app/ita_providers/create_incident/providers.dart';
 import 'package:incident_tracker_app/models/core_res.dart';
 import 'package:incident_tracker_app/theme/theme.dart';
+import 'package:incident_tracker_app/utils/ita_api_utils.dart';
+import 'package:incident_tracker_app/views/incident/widgets/incident_details.dart'
+    show IncidentDetails;
+import 'package:incident_tracker_app/views/incident/widgets/incident_item.dart';
 
 class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
@@ -28,9 +32,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
       body: SingleChildScrollView(
         child: RefreshIndicator(
           onRefresh: () {
-            return ref
-                .read(incidentsProvider.notifier)
-                .getIncidents();
+            return ref.read(incidentsProvider.notifier).getIncidents();
           },
           child:
               [ResponseStatus.loading].contains(incidentDetails.status)
@@ -41,15 +43,43 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                       const Center(child: CircularProgressIndicator()),
                     ],
                   )
+                  : [ResponseStatus.empty].contains(incidentDetails.status)
+                  ? Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Icon(
+                          Icons.hourglass_empty_rounded,
+                          size: 50,
+                          color: primaryColor,
+                        ),
+                        SizedBox(height: 10),
+                        Text(
+                          "There are no incidents added",
+                          style: TextStyle(
+                            fontSize: 17,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
+                  )
                   : [ResponseStatus.success].contains(incidentDetails.status)
                   ? ListView.separated(
                     shrinkWrap: true,
                     itemBuilder: (cxt, i) {
                       var dataItem = incidentDetails.data?[i];
-                      return ListTile(
-                        title: Text(dataItem?.title ?? ""),
-                        subtitle: Text(dataItem?.dateTime ?? "-"),
-                        trailing: Text(dataItem?.status ?? "-"),
+                      return IncidentItem(
+                        createIncident: dataItem!,
+                        onTap: () {
+                          var w = IncidentDetails(incident: dataItem);
+                          showWidgetDialog(
+                            MediaQuery.of(context).size.width,
+                            context,
+                            w,
+                          );
+                        },
                       );
                     },
                     separatorBuilder: (x, _) {
