@@ -32,7 +32,6 @@ class UploadImageNotifier
         FilePickerResult? filePickerResult;
         filePickerResult = await FilePicker.platform.pickFiles(
           type: FileType.image,
-          // allowedExtensions: ["jpeg", "png", "jpg"],
           allowMultiple: false,
           dialogTitle: "Select an image",
           withData: true,

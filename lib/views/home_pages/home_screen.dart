@@ -14,11 +14,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SingleChildScrollView(
-        child: Column(
-          children: [TextButton(onPressed: () {}, child: Text("Hi"))],
-        ),
-      ),
+      body: SingleChildScrollView(child: Column(children: [])),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
       floatingActionButton: FloatingActionButton(
         elevation: 0,
