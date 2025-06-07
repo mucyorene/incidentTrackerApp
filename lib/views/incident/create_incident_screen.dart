@@ -56,12 +56,19 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
         photo: photo?.path ?? "",
       );
 
-      var info = await ref
-          .read(createIncidentProvider.notifier)
-          .createIncident(incident: createIncident);
+      var info =
+          widget.incidentTitle == null
+              ? await ref
+                  .read(createIncidentProvider.notifier)
+                  .createIncident(incident: createIncident)
+              : await ref
+                  .read(createIncidentProvider.notifier)
+                  .editIncident(
+                    title: "${widget.incidentTitle}",
+                    incident: createIncident,
+                  );
 
       if (info.status == ResponseStatus.success) {
-        print("SUCCESS ?");
         Navigator.pop(context);
         showSnackBar(
           context,
@@ -70,7 +77,7 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
         );
         ref.read(incidentsProvider.notifier).getIncidents();
       } else {
-        showSnackBar(context, "Error happened", status: ResponseStatus.error);
+        showSnackBar(context, "Error happened", status: ResponseStatus.failed);
       }
     }
   }
@@ -83,6 +90,7 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
       }
     });
     ref.refresh(selectedFileProvider);
+    ref.refresh(uploadProfileProvider);
     super.initState();
   }
 
@@ -102,12 +110,13 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
         photoController.text = incident.photo ?? "";
         ref.read(selectedCategoryProvider.notifier).state = incident.category;
         ref.read(selectedStatusProvider.notifier).state = incident.status;
-        ref.read(selectedFileProvider.notifier).state = PlatformFile(
-          name: incident.photo ?? "",
-          size: 100,
-          bytes: null,
-          path: incident.photo,
-        );
+        ref.read(selectedFileProvider.notifier).state =
+            incident.photo != ""
+                ? PlatformFile(name: "", size: 10, path: incident.photo)
+                : null;
+        if (incident.photo != "") {
+          ref.read(selectedFilesProvider);
+        }
       }
     }
   }
@@ -131,7 +140,10 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
     var createState = ref.watch(createIncidentProvider);
     return Scaffold(
       appBar: AppBar(
-        title: Text("Create Incident", style: TextStyle(color: Colors.white)),
+        title: Text(
+          widget.incidentTitle == null ? "Create Incident" : "Edit Incident",
+          style: TextStyle(color: Colors.white),
+        ),
       ),
       body: SizedBox.expand(
         child: Padding(
@@ -491,7 +503,7 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
                                   child: Stack(
                                     children: [
                                       Image.file(
-                                        File("${createProfileDetails.path}"),
+                                        File(createProfileDetails.path ?? ""),
                                         width:
                                             MediaQuery.of(context).size.width,
                                         height: 150,
@@ -529,8 +541,10 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
                                                 backgroundColor: Colors.white,
                                               ),
                                             )
-                                            : const Text(
-                                              "Save",
+                                            : Text(
+                                              widget.incidentTitle == null
+                                                  ? "Save"
+                                                  : "Edit",
                                               style: TextStyle(
                                                 fontWeight: FontWeight.bold,
                                                 color: Color(0xFFFFFFFF),

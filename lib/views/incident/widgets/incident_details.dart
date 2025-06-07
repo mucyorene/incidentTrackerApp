@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:incident_tracker_app/ita_providers/create_incident/providers.dart';
+import 'package:incident_tracker_app/models/core_res.dart';
 import 'package:incident_tracker_app/models/create_incident.dart';
+import 'package:incident_tracker_app/utils/ita_api_utils.dart';
+import 'package:incident_tracker_app/views/incident/create_incident_screen.dart';
 
 class IncidentDetails extends ConsumerStatefulWidget {
   final CreateIncident incident;
@@ -29,7 +33,7 @@ class _IncidentDetailsState extends ConsumerState<IncidentDetails> {
             TextButton(
               onPressed: () {
                 Navigator.pop(context);
-                // deleteRecord(id);
+                deleteRecord(title);
               },
               child: const Text("Delete"),
             ),
@@ -39,17 +43,29 @@ class _IncidentDetailsState extends ConsumerState<IncidentDetails> {
     );
   }
 
-  // deleteRecord(String title) async {
-  //   var info = await ref.read(incidentsProvider.notifier).getItems();
-  //
-  //   if (info.statusCode == 200) {
-  //     showSnackBar(context, "${info.message}",
-  //         status: info.status, statusCode: info.statusCode);
-  //   } else {
-  //     showSnackBar(context, "${info.message}",
-  //         status: ResponseStatus.failed, statusCode: info.statusCode);
-  //   }
-  // }
+  deleteRecord(String title) async {
+    var info = await ref
+        .read(deleteIncidentProvider.notifier)
+        .deleteIncident(incident: title);
+
+    if (info.statusCode == 200) {
+      ref.read(incidentsProvider.notifier).getIncidents();
+      showSnackBar(
+        context,
+        "${info.message}",
+        status: info.status,
+        statusCode: info.statusCode,
+      );
+      Navigator.pop(context);
+    } else {
+      showSnackBar(
+        context,
+        "${info.message}",
+        status: ResponseStatus.failed,
+        statusCode: info.statusCode,
+      );
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -67,7 +83,17 @@ class _IncidentDetailsState extends ConsumerState<IncidentDetails> {
                   ),
                   Spacer(),
                   GestureDetector(
-                    onTap: () {},
+                    onTap: () {
+                      var w = CreateIncidentScreen(
+                        incidentTitle: widget.incident.title,
+                      );
+                      Navigator.pop(context);
+                      showWidgetDialog(
+                        MediaQuery.of(context).size.width,
+                        context,
+                        w,
+                      );
+                    },
                     child: Icon(Icons.edit_outlined),
                   ),
                 ],
@@ -88,18 +114,18 @@ class _IncidentDetailsState extends ConsumerState<IncidentDetails> {
                       ),
                       decoration: BoxDecoration(
                         color:
-                        widget.incident.status == "Open"
-                            ? Colors.green.withOpacity(.1)
-                            : Colors.red.withOpacity(.1),
+                            widget.incident.status == "Open"
+                                ? Colors.green.withOpacity(.1)
+                                : Colors.red.withOpacity(.1),
                         borderRadius: BorderRadius.circular(20.0),
                       ),
                       child: Text(
                         widget.incident.status,
                         style: TextStyle(
                           color:
-                          widget.incident.status == "Open"
-                              ? Colors.green
-                              : Colors.red,
+                              widget.incident.status == "Open"
+                                  ? Colors.green
+                                  : Colors.red,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
