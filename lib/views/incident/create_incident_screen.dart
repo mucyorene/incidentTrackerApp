@@ -60,9 +60,17 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
 
       if (info.status == ResponseStatus.success) {
         Navigator.pop(context);
-        showSnackBar(context, "Incident created successfully");
+        showSnackBar(
+          context,
+          "Incident created successfully",
+          status: ResponseStatus.success,
+        );
       } else {
-        showSnackBar(context, info.errorMessage);
+        showSnackBar(
+          context,
+          info.errorMessage,
+          status: ResponseStatus.success,
+        );
       }
     }
   }
@@ -130,8 +138,8 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
                                     validator: (s) {
                                       if (s == "") {
                                         return "Title is required";
-                                      } else if ((s?.length ?? 0) < 3) {
-                                        return "Text should be at least 3 characters";
+                                      } else if ((s?.length ?? 0) < 2) {
+                                        return "Text should be at least 2 characters";
                                       }
                                       return null;
                                     },
@@ -167,8 +175,8 @@ class _CreateIncidentScreenState extends ConsumerState<CreateIncidentScreen> {
                                       validator: (s) {
                                         if (s == "") {
                                           return "Description is required";
-                                        } else if ((s?.length ?? 0) < 3) {
-                                          return "Description should be at least 3 characters";
+                                        } else if ((s?.length ?? 0) < 10) {
+                                          return "Description should be at least 10 characters";
                                         }
                                         return null;
                                       },

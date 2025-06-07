@@ -17,6 +17,16 @@ class CreateIncident {
     this.photo,
   });
 
+  factory CreateIncident.fromJson(Map<String, dynamic> json) => CreateIncident(
+    title: json["title"],
+    description: json["description"],
+    category: json["category"],
+    location: json["location"],
+    dateTime: json["dateTime"],
+    status: json["status"],
+    photo: json["photo"],
+  );
+
   Map<String, dynamic> toJson() {
     return {
       "title": title,
