@@ -7,11 +7,25 @@
   "settings": {
     "language": "Langue",
     "logout": "Déconnexion",
-    "version": "Version",
+    "version": "Version {}",
     "changeLanguageModel": {
       "title": "Changer de langue",
       "english": "Anglais",
       "french": "Français"
     }
+  },
+  "profileScreen": {
+    "personalInfo": {
+      "title": "INFORMATIONS PERSONNELLES",
+      "fullNames": "Nom complet",
+      "accountType": "Type de compte",
+      "gender": "Genre"
+    },
+    "contactInfo": {
+      "title": "INFORMATIONS DE CONTACT",
+      "phone": "Téléphone",
+      "email": "E-mail"
+    },
+    "deleteProfile": "Supprimer le profil"
   }
 }

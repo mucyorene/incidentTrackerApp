@@ -96,14 +96,14 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
               ),
             ),
             ListTile(
-              title: Text("Language"),
+              title: Text("settings.language").tr(),
               onTap: () {
                 changeLanguage();
               },
               leading: Icon(Icons.language),
             ),
             ListTile(
-              title: Text("Logout"),
+              title: Text("settings.logout").tr(),
               onTap: () {
                 showDialog(
                   context: context,
@@ -140,9 +140,9 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             Divider(height: 5),
             const SizedBox(height: 30),
             Text(
-              "Version: $version",
+              "settings.version",
               style: const TextStyle(color: Colors.grey),
-            ),
+            ).tr(args: [version]),
             const SizedBox(height: 40),
           ],
         ),
