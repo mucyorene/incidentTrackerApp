@@ -10,9 +10,7 @@ write your own native code, you will write them in those languages based on the 
 
 ## APK Download Link
 
-```
-[Download APK](https://drive.google.com/file/d/your-apk-id/view)
-```
+* [Download APK](https://drive.google.com/file/d/your-apk-id/view)
 
 ## Packages & Tools Used
 
