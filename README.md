@@ -5,8 +5,7 @@ Incident Tracker App Challenge
 ## Getting Started
 
 This app is built with Flutter `3.29.0` and Dart `3.7.0`.
-It is configured to use `Kotlin` on Android side and `Swift` on iOS side, that means If you want to
-write your own native code, you will write them in those languages based on the platform.
+It is configured to use `Kotlin` on Android side and `Swift` on iOS platform.
 
 ## APK Download Link
 
@@ -30,6 +29,11 @@ write your own native code, you will write them in those languages based on the 
 <img src="https://github.com/mucyorene/incidentTrackerApp/blob/main/assets/screenshoots/login_page.png" height="500" alt="Login page screen">          <img src="https://github.com/mucyorene/incidentTrackerApp/blob/main/assets/screenshoots/profile_page.png" height="500" alt="User profile screen">          <img src="https://github.com/mucyorene/incidentTrackerApp/blob/main/assets/screenshoots/homescreen_full.png" height="500" alt="Home page screen">
 <img src="https://github.com/mucyorene/incidentTrackerApp/blob/main/assets/screenshoots/home_page_with_details.png" height="500" alt="Home page with detailed incident">  <img src="https://github.com/mucyorene/incidentTrackerApp/blob/main/assets/screenshoots/new_incident_screen.png" height="500" alt="New incident screen">
 
+## Run tests
+
+```
+ flutter test
+```
 
 ## Author Declaration
 
