@@ -193,7 +193,7 @@ void showSnackBar(
   BuildContext context,
   String text, {
   ResponseStatus status = ResponseStatus.failed,
-  int duration = 5,
+  int duration = 3,
   int statusCode = 0,
 }) {
   ScaffoldMessenger.of(context).removeCurrentSnackBar();
