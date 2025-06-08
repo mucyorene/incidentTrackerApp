@@ -9,7 +9,7 @@ It is configured to use `Kotlin` on Android side and `Swift` on iOS platform.
 
 ## APK Download Link
 
-* [Download APK](https://drive.google.com/file/d/10noHiMA0DZS-znt0iHJyz8qYHfyKtXI4/view?usp=sharing) (Download generated apk)
+* [Download APK](https://drive.google.com/drive/folders/16iAiwaFwT1l8YPTatuet8DOAol9JjyAK?usp=sharing) (Download generated apk)
 
 ## Packages & Tools Used
 
