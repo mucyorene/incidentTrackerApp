@@ -2,7 +2,8 @@
   "pageContainer": {
     "home": "Home",
     "profile": "My Profile",
-    "settings": "Settings"
+    "settings": "Settings",
+    "incident": "Incidents"
   },
   "settings": {
     "language": "Language",

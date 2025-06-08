@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -40,10 +41,14 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
               SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 15),
-                child: Text(
-                  "Incidents",
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                ),
+                child:
+                    Text(
+                      "pageContainer.incident",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ).tr(),
               ),
               SizedBox(height: 10),
               [ResponseStatus.loading].contains(incidentDetails.status)

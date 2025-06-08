@@ -4,12 +4,9 @@ import 'package:google_fonts/google_fonts.dart' show GoogleFonts;
 
 const primaryColor = Color(0xFFFE8C00); //main
 const primarySurfaceColor = Color(0xFFFFF6D8);
-const primaryColorDark = Color(0xFF052B66);
 const secondaryColor = Color(0xFFFFD33C); //Secondary
 const thirdColor = Color(0xFFFAC577);
 const greenColor = Color(0xFF00C057);
-const skyBlueColor = Color(0xFFEAF0F9);
-const darkRedColor = Color(0xFFA71818);
 
 //success
 const successColor = Color(0xFF50CD89); //success color
@@ -19,17 +16,9 @@ const pressedGreenColor = Color(0xFF28593f);
 
 //Error
 const errorRedColor = Color(0xFFF14141);
-const surfaceRedColor = Color(0xFFFFF2F2);
-const borderRedColor = Color(0xFFFAC0C0);
-const pressedRedColor = Color(0xFF802A2A);
 
 //Info
 const errorInfoColor = Color(0xFF7239EA);
-const surfaceInfoColor = Color(0xFFF6F2FF);
-const borderInfoColor = Color(0xFFD0BDF8);
-const pressedInfoColor = Color(0xFF3F2478);
-
-const darkColor = Color(0xff374957);
 
 const Map<int, Color> myPalette = {
   50: Color.fromRGBO(254, 140, 0, .1),
