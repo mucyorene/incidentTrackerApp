@@ -25,7 +25,11 @@ write your own native code, you will write them in those languages based on the 
 * [File Picker](https://pub.dev/packages/file_picker/versions/8.0.0+1) (Picking and uploading files)
 * [Info Plus](https://pub.dev/packages/package_info_plus/versions/8.0.2) (App Info)
 
-**Some screenshots**
+## Some screenshots
+
+<img src="https://github.com/mucyorene/incidentTrackerApp/blob/main/assets/screenshoots/login_page.png" height="500" alt="Login page screen">  <img src="https://github.com/mucyorene/incidentTrackerApp/blob/main/assets/screenshoots/profile_page.png" height="500" alt="User profile screen">   <img src="https://github.com/mucyorene/incidentTrackerApp/blob/main/assets/screenshoots/home_page_with_details.png" height="500" alt="Home page with detailed incident">
+<img src="https://github.com/mucyorene/incidentTrackerApp/blob/main/assets/screenshoots/home_page.png" height="500" alt="Home page screen">  <img src="https://github.com/mucyorene/incidentTrackerApp/blob/main/assets/screenshoots/new_incident_screen.png" height="500" alt="New incident screen">
+
 
 ## Author Declaration
 
