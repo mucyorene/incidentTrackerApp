@@ -25,6 +25,8 @@ write your own native code, you will write them in those languages based on the 
 * [File Picker](https://pub.dev/packages/file_picker/versions/8.0.0+1) (Picking and uploading files)
 * [Info Plus](https://pub.dev/packages/package_info_plus/versions/8.0.2) (App Info)
 
+**Some screenshots**
+
 ## Author Declaration
 
 _“I confirm that this application was fully developed by me during the exam period. I have
