@@ -34,7 +34,18 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
           onRefresh: () {
             return ref.read(incidentsProvider.notifier).getIncidents();
           },
-          child:
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 15),
+                child: Text(
+                  "Incidents",
+                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                ),
+              ),
+              SizedBox(height: 10),
               [ResponseStatus.loading].contains(incidentDetails.status)
                   ? Column(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -67,6 +78,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   )
                   : [ResponseStatus.success].contains(incidentDetails.status)
                   ? ListView.separated(
+                    physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (cxt, i) {
                       var dataItem = incidentDetails.data?[i];
@@ -90,6 +102,8 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   : Column(
                     children: [Center(child: Text("Another type of error"))],
                   ),
+            ],
+          ),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
