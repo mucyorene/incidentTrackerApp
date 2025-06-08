@@ -139,10 +139,13 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
             ),
             Divider(height: 5),
             const SizedBox(height: 30),
-            Text(
-              "settings.version",
-              style: const TextStyle(color: Colors.grey),
-            ).tr(args: [version]),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Text(
+                "settings.version",
+                style: const TextStyle(color: Colors.grey),
+              ).tr(args: [version]),
+            ),
             const SizedBox(height: 40),
           ],
         ),
