@@ -31,6 +31,7 @@ dependencies:
   extended_image: ^8.1.1
   package_info_plus: ^8.0.2
   dotted_border: ^2.1.0
+  flutter_launcher_icons: ^0.14.3
 
 dev_dependencies:
   flutter_test:
@@ -39,6 +40,14 @@ dev_dependencies:
   build_runner: ^2.4.6
 
   flutter_lints: ^5.0.0
+
+flutter_launcher_icons:
+  android: true
+  ios: true
+  remove_alpha_ios: true
+  image_path: "assets/images/qt_logo.jpg"
+  adaptive_icon_background: "#FE8C00"
+  adaptive_icon_foreground: "assets/images/qt_logo.jpg"
 
 flutter:
 

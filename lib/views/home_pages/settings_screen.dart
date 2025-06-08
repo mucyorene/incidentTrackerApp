@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:incident_tracker_app/ita_providers/authentication/providers.dart';
+import 'package:incident_tracker_app/ita_providers/common_providers.dart';
 import 'package:incident_tracker_app/utils/_public_vars.dart';
-import 'package:package_info_plus/package_info_plus.dart';
 
 class SettingsScreen extends ConsumerStatefulWidget {
   const SettingsScreen({super.key});
@@ -14,12 +14,6 @@ class SettingsScreen extends ConsumerStatefulWidget {
 }
 
 class _SettingsScreenState extends ConsumerState<SettingsScreen> {
-  var versionProvider = StateProvider((ref) => "");
-
-  getVersion() async {
-    var packageInfo = await PackageInfo.fromPlatform();
-    ref.read(versionProvider.notifier).state = packageInfo.version;
-  }
 
   changeLanguage() {
     var locale = context.locale;
@@ -69,14 +63,6 @@ class _SettingsScreenState extends ConsumerState<SettingsScreen> {
         );
       },
     );
-  }
-
-  @override
-  void initState() {
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      getVersion();
-    });
-    super.initState();
   }
 
   @override

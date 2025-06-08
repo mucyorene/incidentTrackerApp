@@ -61,24 +61,27 @@ class _HomeScreenState extends ConsumerState<HomeScreen> {
                   )
                   : [ResponseStatus.empty].contains(incidentDetails.status)
                   ? Center(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Icon(
-                          Icons.hourglass_empty_rounded,
-                          size: 50,
-                          color: primaryColor,
-                        ),
-                        SizedBox(height: 10),
-                        Text(
-                          "There are no incidents added",
-                          style: TextStyle(
-                            fontSize: 17,
-                            fontWeight: FontWeight.w700,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 50),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.hourglass_empty_rounded,
+                            size: 50,
+                            color: primaryColor,
                           ),
-                        ),
-                      ],
+                          SizedBox(height: 10),
+                          Text(
+                            "There are no incidents added",
+                            style: TextStyle(
+                              fontSize: 17,
+                              fontWeight: FontWeight.w700,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                   )
                   : [ResponseStatus.success].contains(incidentDetails.status)
