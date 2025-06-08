@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:incident_tracker_app/views/authentication/sign_in_screen.dart';
-import 'fondation_test.dart' show testSetup;
+import 'test_setup/test_foundation.dart' show testSetup;
 
 void main() {
   late Widget root;
